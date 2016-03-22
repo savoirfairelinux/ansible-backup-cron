@@ -4,3 +4,15 @@ backup_client_user: ""
 # Path where the generated SSH key's pub key will be stored *on the ansible host*.
 # We need to fetch it if we want to propagate it to the storage server.
 backup_client_pubkey_hostpath: "backup_pubkeys/{{ backup_client_user }}.pub"
+# Path where we temporary put our content to build our tarfile from before we send it to our
+# storage server
+backup_client_tmppath: "/tmp/{{ backup_client_user }}_backup"
+# A list of folder paths to include in our backup.
+backup_client_folders: []
+# A path to a script that dumps the content of our DB to stdout
+backup_client_dumpscript: undefined
+# The SSH url of the target storage server. Example: myproject@backup.savoirfairelinux.com
+backup_client_storage_url: undefined
+# Where to place our backup.sh script
+backup_client_script_path: undefined
+
