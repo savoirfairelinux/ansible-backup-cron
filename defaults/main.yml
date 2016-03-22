@@ -1,0 +1,6 @@
+---
+# User for the project that will perform its backup. Backups are going to be ran as this user.
+backup_client_user: ""
+# Path where the generated SSH key's pub key will be stored *on the ansible host*.
+# We need to fetch it if we want to propagate it to the storage server.
+backup_client_pubkey_hostpath: "backup_pubkeys/{{ backup_client_user }}.pub"

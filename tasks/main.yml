@@ -1,0 +1,16 @@
+---
+- name: Ensures that our project user has a SSH key
+  user:
+    name: "{{ backup_client_user }}"
+    generate_ssh_key: yes
+- name: Ensures that we have a public key for our private key
+  shell: "ssh-keygen -f /home/{{ backup_client_user}}/.ssh/id_rsa -y > /home/{{ backup_client_user }}/.ssh/id_rsa.pub"
+  args:
+    creates: "/home/{{ backup_client_user }}/.ssh/id_rsa.pub"
+- name: Fetch backup public key on ansible host
+  fetch:
+    src: "/home/{{ backup_client_user}}/.ssh/id_rsa.pub"
+    dest: "{{ backup_client_pubkey_hostpath }}"
+    flat: yes
+    fail_on_missing: yes
+
