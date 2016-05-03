@@ -1,0 +1,15 @@
+---
+- set_fact:
+    cron_args: "{{ _backup_client_cron_args|combine(backup_client_cron_args) }}"
+- name: Setup cron for backup
+  cron:
+    name: "{{ cron_args.name }}"
+    job: "{{ backup_client_script_path }}"
+    user: "{{ backup_client_user }}"
+    minute: "{{ cron_args.minute }}"
+    hour: "{{ cron_args.hour }}"
+    day: "{{ cron_args.day }}"
+    weekday: "{{ cron_args.weekday }}"
+    month: "{{ cron_args.month }}"
+    disabled: "{{ cron_args.disabled }}"
+

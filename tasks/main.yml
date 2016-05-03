@@ -1,4 +1,5 @@
 ---
-- include: ssh.yml
 - include: scripts.yml
+- include: cron.yml
+  when: backup_client_enable_cron
 

@@ -1,15 +1,24 @@
 ---
 # User for the project that will perform its backup. Backups are going to be ran as this user.
 backup_client_user: ""
-# Path where we temporary put our content to build our tarfile from before we send it to our
-# storage server
-backup_client_tmppath: "/tmp/{{ backup_client_user }}_backup"
 # A list of folder paths to include in our backup.
 backup_client_folders: []
-# A path to a script that dumps the content of our DB to stdout
-backup_client_dumpscript: undefined
-# The SSH url of the target storage server. Example: myproject@backup.savoirfairelinux.com
-backup_client_storage_url: undefined
+# Path to a pre-existing script that dumps the content of our DB to stdout
+backup_client_dumpscript: ""
+# Path to a pre-existing script that accepts our tar dump and backs it up
+backup_client_storage_script_path: ""
 # Where to place our backup.sh script
-backup_client_script_path: undefined
-
+backup_client_script_path: ""
+# Whether we should enable a cron setup for the calling of backup_client_script_path
+backup_client_enable_cron: no
+# Arguments passed to the cron action. Default values below
+# Use backup_client_cron_args, not _backup_client_cron_args
+_backup_client_cron_args:
+  name: "backup for {{ backup_client_user }}"
+  minute: 0
+  hour: 0
+  day: "*"
+  weekday: "*"
+  month: "*"
+  disabled: no
+backup_client_cron_args: {}

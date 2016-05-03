@@ -1,8 +1,7 @@
 #!/bin/bash
 
-rm -rf "{{ backup_client_tmppath|mandatory }}"
-mkdir "{{ backup_client_tmppath }}"
-cd "{{ backup_client_tmppath }}"
+WORKDIR=`mktemp -d`
+cd $WORKDIR
 
 {% for folder in backup_client_folders %}
 ln -s "{{ folder }}" .
@@ -12,5 +11,8 @@ ln -s "{{ folder }}" .
 {{ backup_client_dumpscript }} > dump.sql
 {% endif %}
 
-tar -czh * | ssh {{ backup_client_storage_url }} './dump'
+tar -czh * | {{ backup_client_storage_script_path }}
+
+cd /tmp
+rm -rf "${WORKDIR}"
 
