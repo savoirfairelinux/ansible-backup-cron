@@ -11,7 +11,7 @@ ln -s "{{ folder }}" .
 {{ backup_client_dumpscript }} > dump.sql
 {% endif %}
 
-tar -czh * | {{ backup_client_storage_script_path }}
+tar -ch * | {{ backup_client_storage_script_path }}
 
 cd /tmp
 rm -rf "${WORKDIR}"
