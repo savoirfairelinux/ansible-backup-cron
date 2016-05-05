@@ -1,24 +1,24 @@
 ---
 # User for the project that will perform its backup. Backups are going to be ran as this user.
-backup_client_user: ""
+backup_cron_user: ""
 # A list of folder paths to include in our backup.
-backup_client_folders: []
+backup_cron_folders: []
 # Path to a pre-existing script that dumps the content of our DB to stdout
-backup_client_dumpscript: ""
+backup_cron_dumpscript: ""
 # Path to a pre-existing script that accepts our tar dump and backs it up
-backup_client_storage_script_path: ""
+backup_cron_storage_script_path: ""
 # Where to place our backup.sh script
-backup_client_script_path: ""
-# Whether we should enable a cron setup for the calling of backup_client_script_path
-backup_client_enable_cron: no
+backup_cron_script_path: ""
+# Whether we should enable a cron setup for the calling of backup_cron_script_path
+backup_cron_enable_cron: no
 # Arguments passed to the cron action. Default values below
-# Use backup_client_cron_args, not _backup_client_cron_args
-_backup_client_cron_args:
-  name: "backup for {{ backup_client_user }}"
+# Use backup_cron_cron_args, not _backup_cron_cron_args
+_backup_cron_freq:
+  name: "backup for {{ backup_cron_user }}"
   minute: 0
   hour: 0
   day: "*"
   weekday: "*"
   month: "*"
   disabled: no
-backup_client_cron_args: {}
+backup_cron_freq: {}

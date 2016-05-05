@@ -2,6 +2,6 @@
 - name: Ensure that we have a backup.sh path
   template:
     src: backup.sh
-    dest: "{{ backup_client_script_path }}"
-    owner: "{{ backup_client_user }}"
+    dest: "{{ backup_cron_script_path }}"
+    owner: "{{ backup_cron_user }}"
     mode: u=rwx,g=,o=

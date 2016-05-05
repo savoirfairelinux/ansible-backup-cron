@@ -1,17 +1,29 @@
-# backup-client
+# backup-cron
 
-Sets up a project for regular database/folder backups to a specified
-[backup storage][backup-storage].
+Sets up a project for regular database/folder backups to a specified backup storage script (
+probably [zbackup][ansible-zbackup]).
+
+It also sets up a cron job to do this regularly.
 
 ## Requirements
 
 * Ansible 2.0+
 * Debian Jessie deployment target
-* A [backup storage][backup-storage] somewhere.
-* A specific user on the system for the project you want to back up.
+* A backup storage script that takes a tar file as stdin and properly backs it up
+* A script somewhere that supplies you with a database dump you want to include in your backup
 
 ## Usage
 
-A SSH key is going to be generated for the project user. It's this SSH key that will be used to
-push backups on the storage server. To allow for this configuration, the generated public key will
-be fetched by the provisioner and then propagated to the storage server.
+```
+role: backup_cron
+backup_cron_user: project_user
+backup_cron_script_path: /path/to/script_that_launches_the_backup
+backup_cron_storage_script_path: /path/to/zbackup_dump_script
+backup_cron_dumpscript: /path/to/script_that_dumps_sql
+backup_cron_folders:
+  - /path/to/foder_to_backup
+  - /and/another
+backup_cron_enable_cron: yes
+backup_cron_cron_args:
+  hour: 1
+```
