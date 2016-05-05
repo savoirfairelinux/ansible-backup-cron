@@ -27,3 +27,5 @@ backup_cron_enable_cron: yes
 backup_cron_cron_args:
   hour: 1
 ```
+
+[ansible-zbackup]: https://github.com/savoirfairelinux/ansible-zbackup
