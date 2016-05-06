@@ -4,7 +4,7 @@
 - name: Setup cron for backup
   cron:
     name: "{{ cron_args.name }}"
-    job: "{{ backup_cron_script_path }}"
+    job: "{{ backup_cron_backup_script_path }}"
     user: "{{ backup_cron_user }}"
     minute: "{{ cron_args.minute }}"
     hour: "{{ cron_args.hour }}"
