@@ -2,6 +2,13 @@
 - name: Ensure that we have a backup.sh path
   template:
     src: backup.sh
-    dest: "{{ backup_cron_script_path }}"
+    dest: "{{ backup_cron_backup_script_path|mandatory }}"
+    owner: "{{ backup_cron_user }}"
+    mode: u=rwx,g=,o=
+
+- name: Ensure that we have a restore.sh path
+  template:
+    src: restore.sh
+    dest: "{{ backup_cron_restore_script_path|mandatory }}"
     owner: "{{ backup_cron_user }}"
     mode: u=rwx,g=,o=
