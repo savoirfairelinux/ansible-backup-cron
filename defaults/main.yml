@@ -3,6 +3,7 @@
 backup_cron_user: ""
 # A list of folder paths to include in our backup.
 backup_cron_folders: []
+
 # Path where you're normally going to put all your backup/restore scripts
 backup_cron_base_path: ""
 # Paths to pre-existing scripts to dump/restore the content of our DB to stdout and from stdin
@@ -15,6 +16,7 @@ backup_cron_storage_restore_script_path: "{{ backup_cron_base_path }}/backups/ge
 backup_cron_backup_script_path: "{{ backup_cron_base_path }}/backup.sh"
 # Where to place our restore.sh script
 backup_cron_restore_script_path: "{{ backup_cron_base_path }}/restore.sh"
+
 # Whether we should enable a cron setup for the calling of backup_cron_script_path
 backup_cron_enable_cron: no
 # Arguments passed to the cron action. Default values below
