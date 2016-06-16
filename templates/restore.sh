@@ -9,6 +9,6 @@
 {% endfor %}
 
 {% if backup_cron_dbrestore_script %}
-{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x "dump.sql" | {{ backup_cron_dbrestore_script }}
+{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --to-stdout "dump.sql" | {{ backup_cron_dbrestore_script }}
 {% endif %}
 
