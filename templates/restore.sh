@@ -1,20 +1,14 @@
 #!/bin/bash
 
-WORKDIR=`mktemp -d`
-cd $WORKDIR
-
-# We want to preserve permissions/ownership as they were when files were backed up
-{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --preserve-permissions --same-owner
+# WARNING: THIS SCRIPT IS DESTRUCTIVE!!!
+# It will **overwrite** persistent data of this project with the ones in the latest backup
+# Do not run if the current persistent that is not already backuped up or non-existent!
 
 {% for folder in backup_cron_folders %}
-mkdir -p {{ folder }}
-rsync -a {{ folder|basename }}/* {{ folder }}
+{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --wildcards --preserve-permissions --same-owner -C "{{ folder|dirname }}" "{{ folder|basename }}/*"
 {% endfor %}
 
 {% if backup_cron_dbrestore_script %}
-{{ backup_cron_dbrestore_script }} < dump.sql
+{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x "dump.sql" | {{ backup_cron_dbrestore_script }}
 {% endif %}
-
-cd /tmp
-rm -rf "${WORKDIR}"
 
