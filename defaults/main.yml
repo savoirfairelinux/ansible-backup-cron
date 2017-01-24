@@ -6,10 +6,15 @@ backup_cron_folders: []
 
 # Path where you're normally going to put all your backup/restore scripts
 backup_cron_base_path: ""
-# Paths to pre-existing scripts to dump/restore the content of our DB to stdout and from stdin
-backup_cron_dbdump_script: "{{ backup_cron_base_path }}/dumpdb.sh"
-backup_cron_dbrestore_script: "{{ backup_cron_base_path }}/restoredb.sh"
-# Paths to pre-existing scripts to dump/restore tar backups to/from stdout/stdin
+# Paths to pre-existing scripts to dump/restore data
+# dump_command: Bash command to extract data to a folder
+# folder_to_backup: The folder generate by the dump_command to include in our backup
+# restore_command: Bash command to restore data from folder_to_backup
+backup_cron_backup_script:
+  - dump_command: "{{ backup_cron_base_path }}/dumpdb.sh > dump.sql"
+    folder_to_backup: dump.sql
+    restore_command: "{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --to-stdout \"dump.sql\" | {{ backup_cron_base_path }}/restoredb.sh"
+
 backup_cron_storage_dump_script_path: "{{ backup_cron_base_path }}/backups/dump"
 backup_cron_storage_restore_script_path: "{{ backup_cron_base_path }}/backups/getlatest"
 # Where to place our backup.sh script

@@ -8,7 +8,12 @@
 {{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --wildcards --preserve-permissions --same-owner -C "{{ folder|dirname }}" "{{ folder|basename }}/*"
 {% endfor %}
 
-{% if backup_cron_dbrestore_script %}
-{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --to-stdout "dump.sql" | {{ backup_cron_dbrestore_script }}
-{% endif %}
+WORKDIR=`mktemp -d`
+cd $WORKDIR
 
+{% for folder in backup_cron_backup_script %}
+{{ folder.restore_command }}
+{% endfor %}
+
+cd /tmp
+rm -rf "${WORKDIR}"

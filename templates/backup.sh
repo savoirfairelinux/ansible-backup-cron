@@ -13,10 +13,10 @@ ln -s "{{ folder }}" .
 TO_BACKUP="${TO_BACKUP} {{ folder|basename }}"
 {% endfor %}
 
-{% if backup_cron_dbdump_script %}
-{{ backup_cron_dbdump_script }} > dump.sql
-TO_BACKUP="dump.sql ${TO_BACKUP}"
-{% endif %}
+{% for folder in backup_cron_backup_script %}
+{{ folder.dump_command }}
+TO_BACKUP=" {{ folder.folder_to_backup }}  ${TO_BACKUP}"
+{% endfor %}
 
 # Here, we force the owner of every file we add to be our backup_cron_user because for group
 # and permissions restoration to work on the other end, we need it to be so. Otherwise, with
@@ -26,4 +26,3 @@ tar -ch --owner="{{ backup_cron_user }}" ${TO_BACKUP} | {{ backup_cron_storage_d
 
 cd /tmp
 rm -rf "${WORKDIR}"
-
