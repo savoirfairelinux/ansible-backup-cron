@@ -5,7 +5,7 @@
 # Do not run if the current persistent that is not already backuped up or non-existent!
 
 {% for folder in backup_cron_folders %}
-{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --wildcards --preserve-permissions --same-owner -C "{{ folder|dirname }}" "{{ folder|basename }}/*"
+{{ backup_cron_storage_restore_script_path|mandatory }} | tar -x --wildcards -C "{{ folder|dirname }}" "{{ folder|basename }}/*"
 {% endfor %}
 
 {% if backup_cron_dbrestore_script %}
