@@ -6,10 +6,24 @@ backup_cron_folders: []
 
 # Path where you're normally going to put all your backup/restore scripts
 backup_cron_base_path: ""
-# Paths to pre-existing scripts to dump/restore the content of our DB to stdout and from stdin
-backup_cron_dbdump_script: "{{ backup_cron_base_path }}/dumpdb.sh"
-backup_cron_dbrestore_script: "{{ backup_cron_base_path }}/restoredb.sh"
-# Paths to pre-existing scripts to dump/restore tar backups to/from stdout/stdin
+
+# A list of commands to run prior to tarring up the whole thing. This command is made with a pwd
+# set to a temporary directory whose content will be included in the to-be-created backup.
+# By default, we look for a dumpdb.sh script and execute it, sending the stdout to "dump.sql"
+backup_cron_backup_commands:
+  - "{{ backup_cron_base_path }}/dumpdb.sh > dump.sql"
+
+# list of commands to run after our backup archive has been extracted to a temporary folder. The
+# command is made with a pwd set to that folder, which means that we should have a file structure
+# that is exactly the same as what we've created at backup time.
+backup_cron_restore_commands:
+  - "{{ backup_cron_base_path }}/restoredb.sh < dump.sql"
+
+# Extra paths to pass to tar when creating the backup. We use "*" to select all files/folders in
+# our temp folder, but if one of these files/folders is a hidden file, it's not going to be
+# included. In this case, use this variable to explicitly include it.
+backup_cron_extra_tar_paths: ''
+
 backup_cron_storage_dump_script_path: "{{ backup_cron_base_path }}/backups/dump"
 backup_cron_storage_restore_script_path: "{{ backup_cron_base_path }}/backups/getlatest"
 # Where to place our backup.sh script
