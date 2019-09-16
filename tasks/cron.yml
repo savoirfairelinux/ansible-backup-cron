@@ -2,6 +2,7 @@
 - set_fact:
     cron_args: "{{ _backup_cron_freq|combine(backup_cron_freq) }}"
 - name: Setup cron for backup
+  become: yes
   cron:
     name: "{{ cron_args.name }}"
     job: "{{ backup_cron_backup_script_path }}"
