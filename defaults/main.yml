@@ -16,6 +16,8 @@ backup_cron_storage_restore_script_path: "{{ backup_cron_base_path }}/backups/ge
 backup_cron_backup_script_path: "{{ backup_cron_base_path }}/backup.sh"
 # Where to place our restore.sh script
 backup_cron_restore_script_path: "{{ backup_cron_base_path }}/restore.sh"
+# Where the script will store temp files, will fallback to `mktemp -d` otherwise
+backup_cron_custom_tmp_folder: ""
 
 # Whether we should enable a cron setup for the calling of backup_cron_script_path
 backup_cron_enable_cron: no

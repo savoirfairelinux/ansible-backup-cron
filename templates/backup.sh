@@ -1,6 +1,11 @@
 #!/bin/bash
 
+{% if not backup_cron_custom_tmp_folder|length %}
 WORKDIR=`mktemp -d`
+{% else %}
+mkdir -p {{ backup_cron_custom_tmp_folder }}
+WORKDIR={{ backup_cron_custom_tmp_folder }}
+{% endif %}
 cd $WORKDIR
 
 # In the tar command below, we can't use "*" to tell it to tar everything because it's going to
@@ -24,6 +29,8 @@ TO_BACKUP="dump.sql ${TO_BACKUP}"
 # for chgroup!
 tar -ch --owner="{{ backup_cron_user }}" ${TO_BACKUP} | {{ backup_cron_storage_dump_script_path|mandatory }}
 
+{% if not backup_cron_custom_tmp_folder|length %}
 cd /tmp
+{% endif %}
 rm -rf "${WORKDIR}"
 
