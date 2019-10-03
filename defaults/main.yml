@@ -10,8 +10,8 @@ backup_cron_base_path: ""
 backup_cron_dbdump_script: "{{ backup_cron_base_path }}/dumpdb.sh"
 backup_cron_dbrestore_script: "{{ backup_cron_base_path }}/restoredb.sh"
 # Paths to pre-existing scripts to dump/restore tar backups to/from stdout/stdin
-backup_cron_storage_dump_script_path: "{{ backup_cron_base_path }}/backups/dump"
-backup_cron_storage_restore_script_path: "{{ backup_cron_base_path }}/backups/getlatest"
+backup_cron_storage_dump_script_path: "{{ backup_cron_base_path }}/backups/dump.sh"
+backup_cron_storage_restore_script_path: "{{ backup_cron_base_path }}/backups/getlatest.sh"
 # Where to place our backup.sh script
 backup_cron_backup_script_path: "{{ backup_cron_base_path }}/backup.sh"
 # Where to place our restore.sh script
