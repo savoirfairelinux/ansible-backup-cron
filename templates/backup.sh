@@ -18,9 +18,11 @@ ln -s "{{ folder }}" .
 TO_BACKUP="${TO_BACKUP} {{ folder|basename }}"
 {% endfor %}
 
+DUMP_PATH={% if not backup_cron_custom_tmp_folder %} "dump.sql" {% else %} "{{ backup_cron_custom_tmp_folder }}" {% endif %}
+
 {% if backup_cron_dbdump_script %}
-{{ backup_cron_dbdump_script }} > dump.sql
-TO_BACKUP="dump.sql ${TO_BACKUP}"
+{{ backup_cron_dbdump_script }} > $DUMP_PATH/dump.sql
+TO_BACKUP="${$DUMP_PATH} ${TO_BACKUP}"
 {% endif %}
 
 # Here, we force the owner of every file we add to be our backup_cron_user because for group
