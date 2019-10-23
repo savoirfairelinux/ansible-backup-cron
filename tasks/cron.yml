@@ -13,4 +13,4 @@
     weekday: "{{ cron_args.weekday }}"
     month: "{{ cron_args.month }}"
     disabled: "{{ cron_args.disabled }}"
-
+    state: present

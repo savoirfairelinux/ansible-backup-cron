@@ -1,4 +1,22 @@
 ---
+- name: Ensure that we have required folders
+  become: yes
+  file:
+    path: "{{ physical_backup_destination }}"
+    state: directory
+    owner: "{{ backup_cron_user }}"
+    mode: '0755'
+  when: physical_backup_destination is defined
+
+- name: Create a symbolic link
+  become: yes
+  file:
+    src: "{{ physical_backup_destination }}"
+    dest: /opt/performcoop/backups/repo/backups
+    owner: "{{ backup_cron_user }}"
+    state: link
+  when: physical_backup_destination is defined
+
 - name: Ensure that we have a backup.sh path
   become: yes
   template:
