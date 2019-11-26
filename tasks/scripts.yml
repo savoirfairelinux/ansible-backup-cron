@@ -8,6 +8,29 @@
     mode: '0755'
   when: physical_backup_destination is defined
 
+- name: Delete existing folder at link location
+  become: yes
+  file:
+    path: /opt/performcoop/backups
+    state: absent
+  when: physical_backup_destination is defined
+
+- name: Ensure destination exists
+  become: yes
+  file:
+    path: /opt/performcoop/backups/repo
+    state: directory
+    mode: '0755'
+  when: physical_backup_destination is defined
+
+- name: Ensure source exists
+  become: yes
+  file:
+    path: "{{ physical_backup_destination }}"
+    state: directory
+    mode: '0755'
+  when: physical_backup_destination is defined
+
 - name: Create a symbolic link
   become: yes
   file:
@@ -15,6 +38,7 @@
     dest: /opt/performcoop/backups/repo/backups
     owner: "{{ backup_cron_user }}"
     state: link
+    force: yes
   when: physical_backup_destination is defined
 
 - name: Ensure that we have a backup.sh path

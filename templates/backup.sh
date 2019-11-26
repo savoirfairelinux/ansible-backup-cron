@@ -1,9 +1,10 @@
 #!/bin/bash
 set -x
 
+# list of files to backup
 {% for folder in backup_cron_folders %}
 ln -s "{{ folder }}" .
-TO_BACKUP="$TO_BACKUP {{ folder|basename }}" # list of files to backup
+TO_BACKUP="$TO_BACKUP {{ folder|basename }}"
 {% endfor %}
 
 TIMESTAMP=`date '+%Y%m%d%H%M%S'`
