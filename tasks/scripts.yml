@@ -11,14 +11,14 @@
 - name: Delete existing folder at link location
   become: yes
   file:
-    path: /opt/performcoop/backups
+    path: "{{ project_path }}/backups"
     state: absent
   when: physical_backup_destination is defined
 
 - name: Ensure destination exists
   become: yes
   file:
-    path: /opt/performcoop/backups/repo
+    path: "{{ project_path }}/backups/repo"
     state: directory
     mode: '0755'
   when: physical_backup_destination is defined
@@ -35,7 +35,7 @@
   become: yes
   file:
     src: "{{ physical_backup_destination }}"
-    dest: /opt/performcoop/backups/repo/backups
+    dest: "{{ project_path }}/backups/repo/backups"
     owner: "{{ backup_cron_user }}"
     state: link
     force: yes
