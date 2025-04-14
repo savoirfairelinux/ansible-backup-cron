@@ -1,5 +1,5 @@
 ---
-- include: scripts.yml
-- include: cron.yml
+- import_tasks: scripts.yml
+- import_tasks: cron.yml
   when: backup_cron_enable_cron
 
